@@ -57,7 +57,7 @@ SECTOR     = ['XLK','XLV','XLF','XLE','XLY','XLI','XLB','XLU','XLRE','XLC','XLP'
 SECTOR_EW  = ['RSPG','RSPT','RSPF','RSPN','RSPD','RSP','RSPU','RSPM','RSPH','RSPR','RSPS','RSPC']
 THEMATIC   = ['BOTZ','HACK','SOXX','ICLN','SKYY','XBI','ITA','FINX','ARKG','URA',
               'AIQ','CIBR','ROBO','ARKK','DRIV','OGIG','ACES','PAVE','HERO','CLOU']
-ETFMAIN_EW = ['RSP','QQQE','EDOW','EQWS']
+ETFMAIN_EW = ['RSP','QQQE','EDOW','EQAL']
 COUNTRY    = ['GREK','ARGT','EWS','EWP','EUFN','MCHI','EWZ','EWI','EWY','EWH',
               'ECH','EWC','EWL','EWQ','EWA','IEV','IEUR','INDA','EWG','EWW',
               'EZU','EEM','EFA','EWD','TUR','EZA','ACWI','KSA','EIDO','EWJ','EWT','THD']

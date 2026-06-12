@@ -254,6 +254,25 @@ td:first-child,td.l{text-align:left}
 </div>
 
 <!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 3: MARKET BREADTH & SENTIMENT                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="sec" id="s-breadth">
+  <div class="sec-hdr">
+    <div class="sec-n">03</div>
+    <div class="sec-t">Market Breadth &amp; Sentiment</div>
+    <div class="sec-sub">S&amp;P 500 INTERNALS &middot; SENTIMENT INDICATORS &middot; UPDATED DAILY</div>
+  </div>
+  <div class="card" style="padding:16px 18px">
+    <div class="card-lbl" style="margin-bottom:14px">&#9658; Market Internals Dashboard</div>
+    <div id="breadthGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px">
+      <div style="color:var(--text3);font-size:11px;grid-column:span 7;text-align:center;padding:20px 0">Loading breadth data&hellip;</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════ -->
 <!-- SECTION 1: MACRO OVERVIEW                             -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div class="sec" id="s1">
@@ -277,13 +296,6 @@ td:first-child,td.l{text-align:left}
     </div>
   </div>
 
-  <!-- Crypto -->
-  <div class="card" style="margin-bottom:9px">
-    <div class="card-lbl">▸ Crypto</div>
-    <table><thead><tr><th class="l">Asset</th><th>Price (USD)</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th></tr></thead>
-    <tbody id="t-crypto"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
-  </div>
-
   <!-- Metals + Commodities -->
   <div class="mg">
     <div class="card">
@@ -298,12 +310,19 @@ td:first-child,td.l{text-align:left}
     </div>
   </div>
 
-  <!-- Yields + Global -->
+  <!-- Yields + Crypto (stacked left) + Global (right) -->
   <div class="mg">
-    <div class="card">
-      <div class="card-lbl">▸ US Treasury Yields</div>
-      <table><thead><tr><th class="l">Tenor</th><th>Yield%</th><th>1D (bps)</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th></tr></thead>
-      <tbody id="t-yields"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div class="card">
+        <div class="card-lbl">▸ US Treasury Yields</div>
+        <table><thead><tr><th class="l">Tenor</th><th>Yield%</th><th>1D (bps)</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th></tr></thead>
+        <tbody id="t-yields"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+      </div>
+      <div class="card">
+        <div class="card-lbl">▸ Crypto</div>
+        <table><thead><tr><th class="l">Asset</th><th>Price (USD)</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th></tr></thead>
+        <tbody id="t-crypto"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+      </div>
     </div>
     <div class="card">
       <div class="card-lbl">▸ Global Market Indices</div>
@@ -396,30 +415,10 @@ td:first-child,td.l{text-align:left}
   </div>
 </div>
 
+<!-- [BREADTH SECTION MOVED TO TOP — see above Section 1] -->
+
+<!-- [POSITION SIZING SECTION DISABLED — uncomment to re-enable]
 <div class="divider"></div>
-
-<!-- ══════════════════════════════════════════════════════ -->
-<!-- ══════════════════════════════════════════════════════ -->
-<!-- SECTION 3: MARKET BREADTH & SENTIMENT                 -->
-<!-- ══════════════════════════════════════════════════════ -->
-<div class="sec" id="s-breadth">
-  <div class="sec-hdr">
-    <div class="sec-n">03</div>
-    <div class="sec-t">Market Breadth &amp; Sentiment</div>
-    <div class="sec-sub">S&amp;P 500 INTERNALS &middot; SENTIMENT INDICATORS &middot; UPDATED DAILY</div>
-  </div>
-  <div class="card" style="padding:16px 18px">
-    <div class="card-lbl" style="margin-bottom:14px">&#9658; Market Internals Dashboard</div>
-    <div id="breadthGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px">
-      <div style="color:var(--text3);font-size:11px;grid-column:span 7;text-align:center;padding:20px 0">Loading breadth data&hellip;</div>
-    </div>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- SECTION 4: POSITION SIZING                            -->
-<!-- ══════════════════════════════════════════════════════ -->
 <div class="sec" id="s4">
   <div class="sec-hdr">
     <div class="sec-n">04</div>
@@ -427,7 +426,6 @@ td:first-child,td.l{text-align:left}
     <div class="sec-sub">RISK-BASED · STAGGERED STOPS</div>
   </div>
   <div class="calc-wrap">
-    <!-- Inputs -->
     <div class="cpanel">
       <div class="c-ttl">▸ Trade Parameters</div>
       <div class="dir-tog">
@@ -457,8 +455,6 @@ td:first-child,td.l{text-align:left}
         </div>
       </div>
     </div>
-
-    <!-- Stops -->
     <div class="stops-panel">
       <div class="stops-hdr">
         <span style="font-size:9px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-right:auto">▸ Staggered Stop Levels</span>
@@ -472,7 +468,6 @@ td:first-child,td.l{text-align:left}
           <div class="viz-note">Scale-Out Visualization</div>
           <div class="scale-viz" id="scaleViz"></div>
         </div>
-        <!-- Risk/Reward helper -->
         <div style="margin-top:22px;padding-top:12px;border-top:1px solid var(--border)">
           <div class="viz-note" style="margin-bottom:8px">R:R Targets</div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" id="rrTargets"></div>
@@ -481,6 +476,7 @@ td:first-child,td.l{text-align:left}
     </div>
   </div>
 </div>
+END POSITION SIZING SECTION -->
 
 </div><!-- /wrap -->
 <!-- ══ TRADINGVIEW CHART MODAL ════════════════════ -->
@@ -514,7 +510,7 @@ const FINNHUB_SYMBOLS = {
   submarket: ['IVW','IVE','IJK','IJJ','IJT','IJS','MGK','VUG','VTV'],
   sector:    ['XLK','XLV','XLF','XLE','XLY','XLI','XLB','XLU','XLRE','XLC','XLP'],
   sectorew:  ['RYT','RYH','RYF','RYE','RCD','RGI','RTM','RYU','EWRE','EWCO','RHS'],
-  etfmain_ew:['RSP','QQQE','EDOW','EQWS'],
+  etfmain_ew:['RSP','QQQE','EDOW','EQAL'],
   thematic:  ['IYC','ESPO','PEJ','XRT','IYK','PBJ','AMLP','MLPX','XOP','OIH','XES','ICLN','TAN','PBW','NLR','FCG','KBWB','KRE','IAI','BIZD','IYG','KIE','ARKF','IBB','XBI','ARKG','IHI','PPH','IHE','IHF','ITA','XAR','ARKX','UFO','NASA','IYT','XTN','JETS','PHO','XME','GDX','GDXJ','SIL','SILJ','COPX','REMX','LIT','URA','URNM','GUNR','GNR','MOO','GRID','VOLT','ITB','XHB','SLX','WOOD','VNQ','SCHH','SMH','SOXX','DRAM','IGV','FDN','KWEB','CIBR','ARKK','ARKW','ARKQ','QTUM','SKYY','ROBO','DTCR','BLOK','BITW','WGMI','IYZ','IGF'],
   country:   ['EWJ','EWY','INDA','MCHI','GXC','EWH','EWU','EWQ','EWG','EWZ','EWT','EWA','EWC','EWL','EWP','EWS','TUR','EWM','EPHE','THD','VNM','EWI','EWN','EWD','EWK','EWO'],
 };
@@ -609,7 +605,7 @@ const META = {
   'RSP':    { name:'Invesco S&P 500 Equal Weight', sym:'RSP' },
   'QQQE':   { name:'Direxion Nasdaq-100 EW',       sym:'QQQE' },
   'EDOW':   { name:'First Trust Dow 30 EW',         sym:'EDOW' },
-  'EQWS':   { name:'Equal Weight Small Cap ETF',    sym:'EQWS' },
+  'EQAL':   { name:'Invesco Russell 1000 Equal Weight', sym:'EQAL' },
   // Thematic — Consumer
   'IYC':    { name:'iShares Consumer Discretionary', sym:'IYC' },
   'ESPO':   { name:'VanEck Video Gaming & eSports',  sym:'ESPO' },
@@ -839,7 +835,7 @@ const DEMO = {
     {sym:'RSP', price:173.4, d1:-0.44,w1:-1.22,hi52:-5.84, ytd:0.84, spark:[-0.2,0.6,-0.8,-0.2,-0.44]},
     {sym:'QQQE',price:84.2,  d1:-0.72,w1:-1.84,hi52:-7.22, ytd:-0.44,spark:[-0.3,0.8,-1.2,-0.4,-0.72]},
     {sym:'EDOW',price:44.8,  d1:-0.22,w1:-0.84,hi52:-3.22, ytd:2.44, spark:[-0.1,0.4,-0.6,-0.1,-0.22]},
-    {sym:'EQWS',price:64.4,  d1:-0.84,w1:-1.44,hi52:-9.44, ytd:-2.44,spark:[-0.4,0.8,-1.1,-0.6,-0.84]},
+    {sym:'EQAL',price:58.8,  d1:-0.58,w1:-1.24,hi52:-5.84, ytd:0.44, spark:[-0.2,0.6,-0.9,-0.3,-0.58]},
   ],
   submarket: [
     {sym:'IVW',price:102.4,d1:-0.84,w1:3.44,hi52:-4.22,ytd:2.84,spark:[0.4,1.8,0.8,-0.2,-0.84]},
@@ -1440,11 +1436,12 @@ function renderBreadth(d) {
 // ═══════════════════════════════════════════════════════
 window.addEventListener('load',()=>{
   loadData();
-  calc();
+  // calc(); // POSITION SIZING DISABLED — uncomment when re-enabling calculator
   // Silent re-fetch every 60 min in case the daily data has refreshed
   setInterval(loadData, 60 * 60 * 1000);
 });
 
+/* POSITION CALCULATOR DISABLED — uncomment to re-enable
 // ═══════════════════════════════════════════════════════
 // POSITION CALCULATOR
 // ═══════════════════════════════════════════════════════
@@ -1536,6 +1533,7 @@ function calc(){
     rr.appendChild(d);
   });
 }
+END POSITION CALCULATOR DISABLED */
 
 // ═══════════════════════════════════════════════════════
 // SNAPSHOT + SHARE
