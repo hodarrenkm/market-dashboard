@@ -967,7 +967,7 @@ function renderAll(d) {
   if(_rspData && !_sectorewData.find(e=>e.sym==='RSP')) _sectorewData.push({..._rspData});
   _sectorewData.sort((a,b)=>(b.w1||0)-(a.w1||0));
   buildRows(_sectorewData, 't-sectorew', {rank:true,hasPrice:false,hasHoldings:true,benchmarkSym:'RSP',showEma:true});
-  buildRows((d.thematic||[]).slice(0,10), 't-thematic', {rank:true,hasPrice:true,hasHoldings:true,showEma:true});
+  buildRows((d.thematic||[]), 't-thematic', {rank:true,hasPrice:true,hasHoldings:true,showEma:true});
   buildRows(d.country,   't-country',  {rank:true,hasPrice:true,hasHoldings:true,showEma:true});
 
   // Crypto

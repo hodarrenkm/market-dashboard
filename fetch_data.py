@@ -92,12 +92,21 @@ else:
 
 # ── TICKER REMAPS ────────────────────────────────────────────────────────────────────────────────
 TICKER_REMAP = {
+    # Futures
     'ES=F':'ES1!', 'NQ=F':'NQ1!', 'RTY=F':'RTY1!', 'YM=F':'YM1!',
+    # Metals
     'GC=F':'GC1!', 'SI=F':'SI1!', 'HG=F':'HG1!', 'PL=F':'PL1!', 'PA=F':'PA1!',
-    'CL=F':'CL1!', 'NG=F':'NG1!',
-    '^TNX':'US10Y', '^TYX':'US30Y',
+    # Energy
+    'CL=F':'CL1!', 'NG=F':'NG1!', 'BZ=F':'BZ1!', 'RB=F':'RB1!', 'HO=F':'HO1!',
+    # Yields
+    '2YY=F':'US2Y', '^FVX':'US5Y', '^TNX':'US10Y', '^TYX':'US30Y',
+    # FX / volatility
     'DX-Y.NYB':'DX-Y.NYB', '^VIX':'CBOE:VIX',
+    # Crypto
     'BTC-USD':'BTC','ETH-USD':'ETH','SOL-USD':'SOL','XRP-USD':'XRP',
+    # Thematic ETFs (explicit identity mappings)
+    'SOXX':'SOXX', 'HACK':'HACK', 'ROBO':'ROBO', 'WCLD':'WCLD', 'CIBR':'CIBR',
+    'KOMP':'KOMP', 'GRID':'GRID', 'SNSR':'SNSR', 'DAPP':'DAPP', 'FINX':'FINX',
 }
 
 # ── MASSIVE API FETCH ─────────────────────────────────────────────────────────────────────────────────────
