@@ -444,8 +444,9 @@ def extract_metrics(df, sym):
         return None
     closes = df['Close'].values
     price  = float(closes[-1])
-    d1     = pct(closes[-1], closes[-2]) if len(closes) >= 2 else 0.0
-    w1     = pct(closes[-1], closes[-6]) if len(closes) >= 6 else 0.0
+    d1     = pct(closes[-1], closes[-2])  if len(closes) >= 2  else 0.0
+    w1     = pct(closes[-1], closes[-6])  if len(closes) >= 6  else 0.0
+    m1     = pct(closes[-1], closes[-22]) if len(closes) >= 22 else 0.0
     hi52_price = float(df['High'].max()) if 'High' in df else price
     hi52_pct   = pct(price, hi52_price)
     this_year  = datetime.datetime.now().year
@@ -468,6 +469,7 @@ def extract_metrics(df, sym):
         'price': round(price, 4),
         'd1':    d1,
         'w1':    w1,
+        'm1':    m1,
         'hi52':  hi52_pct,
         'ytd':   ytd,
         'spark': spark,

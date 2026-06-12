@@ -200,6 +200,12 @@ td:first-child,td.l{text-align:left}
 .ema-up{color:var(--green);font-size:13px;font-weight:600}
 .ema-dn{color:var(--text3);font-size:12px;opacity:0.5}
 
+/* ── SORTABLE HEADERS ── */
+.sort-hdr{cursor:pointer;user-select:none;white-space:nowrap}
+.sort-hdr:hover{color:var(--text2)!important}
+.sort-ind{color:var(--text3);font-size:8px;letter-spacing:0;margin-left:2px}
+.sort-ind.active{color:var(--accent)}
+
 /* ── LOADING STATE ── */
 .loading{color:var(--text3);font-size:11px;letter-spacing:1px;padding:14px;text-align:center;animation:fade .8s infinite alternate}
 @keyframes fade{from{opacity:.4}to{opacity:1}}
@@ -347,11 +353,22 @@ td:first-child,td.l{text-align:left}
     </div>
   </div>
 
-  <!-- Thematic Top 10 -->
+  <!-- Thematic ETFs -->
   <div class="card" style="margin-bottom:9px">
-    <div class="card-lbl">▸ Top 10 Thematic Sectors — Ranked by 1W (Holdings expandable ▸)</div>
-    <table><thead><tr><th class="l">#</th><th class="l">Theme / ETF</th><th>Price</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th><th>Trend</th><th class="l">Holdings</th></tr></thead>
-    <tbody id="t-thematic"><tr><td colspan="10" class="loading">Loading...</td></tr></tbody></table>
+    <div class="card-lbl">▸ Thematic ETFs (90) — Click column headers to sort · Holdings expandable ▸</div>
+    <table><thead id="thematic-thead"><tr>
+      <th class="l">#</th>
+      <th class="l sort-hdr" data-sort="name" onclick="thematicHeaderClick('name')">Theme / ETF<span class="sort-ind"> ▲▼</span></th>
+      <th class="l sort-hdr" data-sort="sector" onclick="thematicHeaderClick('sector')">Sector<span class="sort-ind active"> ▲</span></th>
+      <th>Price</th>
+      <th class="sort-hdr" data-sort="d1" onclick="thematicHeaderClick('d1')">1D%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="w1" onclick="thematicHeaderClick('w1')">1W%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="m1" onclick="thematicHeaderClick('m1')">1M%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="hi52" onclick="thematicHeaderClick('hi52')">52W Hi%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="ytd" onclick="thematicHeaderClick('ytd')">YTD%<span class="sort-ind"> ▲▼</span></th>
+      <th>5D</th><th>Trend</th><th class="l">Holdings</th>
+    </tr></thead>
+    <tbody id="t-thematic"><tr><td colspan="12" class="loading">Loading...</td></tr></tbody></table>
   </div>
 
   <!-- Country ETFs -->
@@ -482,6 +499,20 @@ const FINNHUB_SYMBOLS = {
   sectorew:  ['RYT','RYH','RYF','RYE','RCD','RGI','RTM','RYU','EWRE','EWCO','RHS'],
   thematic:  ['BOTZ','HACK','SOXX','ICLN','SKYY','XBI','ITA','FINX','ARKG','URA','AIQ','CIBR','ROBO','ARKK','DRIV','OGIG','ACES','PAVE','HERO','CLOU'],
   country:   ['EWJ','EWY','INDA','MCHI','GXC','EWH','EWU','EWQ','EWG','EWZ','EWT','EWA','EWC','EWL','EWP','EWS','TUR','EWM','EPHE','THD','VNM','EWI','EWN','EWD','EWK','EWO'],
+};
+
+const THEMATIC_SECTOR = {
+  'XLY':'Consumer Discretionary','IYC':'Consumer Discretionary','ESPO':'Consumer Discretionary','PEJ':'Consumer Discretionary','XRT':'Consumer Discretionary',
+  'XLP':'Consumer Staples','IYK':'Consumer Staples','PBJ':'Consumer Staples',
+  'XLE':'Energy','AMLP':'Energy','MLPX':'Energy','XOP':'Energy','OIH':'Energy','XES':'Energy','ICLN':'Energy','TAN':'Energy','PBW':'Energy','NLR':'Energy','FCG':'Energy',
+  'XLF':'Financials','KBWB':'Financials','KRE':'Financials','IAI':'Financials','BIZD':'Financials','IYG':'Financials','KIE':'Financials','ARKF':'Financials',
+  'XLV':'Healthcare','IBB':'Healthcare','XBI':'Healthcare','ARKG':'Healthcare','IHI':'Healthcare','PPH':'Healthcare','IHE':'Healthcare','IHF':'Healthcare',
+  'XLI':'Industrials','ITA':'Industrials','XAR':'Industrials','ARKX':'Industrials','UFO':'Industrials','NASA':'Industrials','IYT':'Industrials','XTN':'Industrials','JETS':'Industrials','PHO':'Industrials',
+  'XLB':'Materials','XME':'Materials','GDX':'Materials','GDXJ':'Materials','SIL':'Materials','SILJ':'Materials','COPX':'Materials','REMX':'Materials','LIT':'Materials','URA':'Materials','URNM':'Materials','GUNR':'Materials','GNR':'Materials','MOO':'Materials','GRID':'Materials','VOLT':'Materials','ITB':'Materials','XHB':'Materials','SLX':'Materials','WOOD':'Materials',
+  'XLRE':'Real Estate','VNQ':'Real Estate','SCHH':'Real Estate',
+  'XLK':'Technology','SMH':'Technology','SOXX':'Technology','DRAM':'Technology','IGV':'Technology','FDN':'Technology','KWEB':'Technology','CIBR':'Technology','ARKK':'Technology','ARKW':'Technology','ARKQ':'Technology','QTUM':'Technology','SKYY':'Technology','ROBO':'Technology','DTCR':'Technology','BLOK':'Technology','BITW':'Technology','WGMI':'Technology',
+  'XLC':'Telecom','IYZ':'Telecom',
+  'XLU':'Utilities','IGF':'Utilities',
 };
 
 const META = {
@@ -869,10 +900,10 @@ function holdRow(id,sym){
 // TABLE BUILDERS
 // ═══════════════════════════════════════════════════════
 function buildRows(data, tbodyId, opts={}) {
-  const {rank=false, hasPrice=true, isYield=false, hasHoldings=false, benchmarkSym=null, showEma=false} = opts;
+  const {rank=false, hasPrice=true, isYield=false, hasHoldings=false,
+         benchmarkSym=null, showEma=false, sectorMap=null, hasM1=false} = opts;
   const tbody = document.getElementById(tbodyId);
   tbody.innerHTML='';
-
 
   data.forEach((item, i) => {
     const m = META[item.sym]||{name:item.sym,sym:item.sym};
@@ -884,15 +915,16 @@ function buildRows(data, tbodyId, opts={}) {
     const rankHTML = rank ? `<td class="l"><span class="rank ${i<3?'g':''}">${i+1}</span></td>` : '';
     const priceHTML = hasPrice && item.price!==undefined ? `<td>${fp(item.price, item.price<10?3:item.price<100?2:item.price>1000?0:2)}</td>` : '';
     const d1HTML = isYield ? `<td>${bps(item.d1)}</td>` : `<td>${pctBar(item.d1)}</td>`;
-    
+    const sectorHTML = sectorMap ? `<td class="l" style="font-size:10px;color:var(--text3);letter-spacing:.3px">${sectorMap[item.sym]||'—'}</td>` : '';
+    const m1HTML = hasM1 ? `<td>${pctBar(item.m1,false,20)}</td>` : '';
+
     const tr = document.createElement('tr');
     if(benchmarkSym && item.sym===benchmarkSym) tr.classList.add('bench-row');
-    tr.innerHTML = `${rankHTML}${nameHTML}${priceHTML}${d1HTML}<td>${pctBar(item.w1,true)}</td><td>${pctBar(item.hi52,false,30)}</td><td>${pctBar(item.ytd,false,20)}</td>`;
+    tr.innerHTML = `${rankHTML}${nameHTML}${sectorHTML}${priceHTML}${d1HTML}<td>${pctBar(item.w1,true)}</td>${m1HTML}<td>${pctBar(item.hi52,false,30)}</td><td>${pctBar(item.ytd,false,20)}</td>`;
     const sparkTd = document.createElement('td');
     sparkTd.style.cssText='text-align:center;padding:4px 8px';
     sparkTd.appendChild(spark(item.spark));
     tr.appendChild(sparkTd);
-    // EMA trend indicator column (equity ETFs only)
     if(showEma){
       const emaTd=document.createElement('td');
       emaTd.style.cssText='text-align:center;padding:3px 8px';
@@ -922,7 +954,7 @@ function buildRows(data, tbodyId, opts={}) {
         const holdTr=document.createElement('tr');
         holdTr.className='holdings-row';
         holdTr.id='hold'+hid;
-        const colspan = (rank?1:0)+1+(hasPrice?1:0)+4+1+(showEma?1:0)+(hasHoldings?1:0);
+        const colspan = (rank?1:0)+1+(sectorMap?1:0)+(hasPrice?1:0)+4+(hasM1?1:0)+1+(showEma?1:0)+(hasHoldings?1:0);
         holdTr.innerHTML=`<td colspan="${colspan}" style="padding:0"><div class="holdings-inner">
           <div class="h-title">TOP 10 HOLDINGS BY WEIGHT — ${META[sym]?.name||sym}</div>
           <div class="h-list">${h.map(x=>`<div class="h-item"><span class="h-w">${x.w.toFixed(1)}%</span><span class="h-sym">${x.s}</span><span class="h-nm">${x.n}</span></div>`).join('')}</div>
@@ -941,6 +973,62 @@ function toggleH(id,sym){
   if(!row)return;
   const open=btn.classList.toggle('open');
   row.classList.toggle('show',open);
+}
+
+// ═══════════════════════════════════════════════════════
+// THEMATIC TABLE SORT
+// ═══════════════════════════════════════════════════════
+const THEMATIC_SORT = {col:'sector', dir:'asc'};
+
+function _thematicCmp(a, b, col, dir) {
+  let av, bv;
+  if (col === 'name') {
+    av = (META[a.sym]?.name || a.sym).toLowerCase();
+    bv = (META[b.sym]?.name || b.sym).toLowerCase();
+    return dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+  }
+  if (col === 'sector') {
+    av = THEMATIC_SECTOR[a.sym] || '';
+    bv = THEMATIC_SECTOR[b.sym] || '';
+    const cmp = dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+    return cmp !== 0 ? cmp : (b.w1||0) - (a.w1||0);
+  }
+  av = a[col] ?? -Infinity;
+  bv = b[col] ?? -Infinity;
+  return dir === 'asc' ? av - bv : bv - av;
+}
+
+function renderThematic(data) {
+  const sorted = [...data].sort((a,b) => _thematicCmp(a, b, THEMATIC_SORT.col, THEMATIC_SORT.dir));
+  buildRows(sorted, 't-thematic', {rank:true, hasPrice:true, hasHoldings:true, showEma:true, sectorMap:THEMATIC_SECTOR, hasM1:true});
+  // Update header indicators
+  document.querySelectorAll('#thematic-thead th[data-sort]').forEach(th => {
+    const ind = th.querySelector('.sort-ind');
+    if (!ind) return;
+    if (th.dataset.sort === THEMATIC_SORT.col) {
+      ind.textContent = THEMATIC_SORT.dir === 'asc' ? ' ▲' : ' ▼';
+      ind.classList.add('active');
+    } else {
+      ind.textContent = ' ▲▼';
+      ind.classList.remove('active');
+    }
+  });
+}
+
+function thematicHeaderClick(col) {
+  if (THEMATIC_SORT.col === col) {
+    if (THEMATIC_SORT.dir === 'asc') {
+      THEMATIC_SORT.dir = 'desc';
+    } else {
+      // third state → reset to default (sector asc)
+      THEMATIC_SORT.col = 'sector';
+      THEMATIC_SORT.dir = 'asc';
+    }
+  } else {
+    THEMATIC_SORT.col = col;
+    THEMATIC_SORT.dir = 'asc';
+  }
+  if (DATA) renderThematic(DATA.thematic || []);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -967,7 +1055,7 @@ function renderAll(d) {
   if(_rspData && !_sectorewData.find(e=>e.sym==='RSP')) _sectorewData.push({..._rspData});
   _sectorewData.sort((a,b)=>(b.w1||0)-(a.w1||0));
   buildRows(_sectorewData, 't-sectorew', {rank:true,hasPrice:false,hasHoldings:true,benchmarkSym:'RSP',showEma:true});
-  buildRows((d.thematic||[]), 't-thematic', {rank:true,hasPrice:true,hasHoldings:true,showEma:true});
+  renderThematic(d.thematic||[]);
   buildRows(d.country,   't-country',  {rank:true,hasPrice:true,hasHoldings:true,showEma:true});
 
   // Crypto
