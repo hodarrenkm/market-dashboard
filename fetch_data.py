@@ -740,7 +740,7 @@ def fetch_all(prices_only=False):
     # rather than overwriting with empty arrays.
     if existing:
         massive_sections = ['etfmain', 'submarket', 'sector', 'sectorew',
-                            'thematic', 'country', 'crypto', 'global', 'yields']
+                            'country', 'crypto', 'global', 'yields']
         for key in massive_sections:
             if not output.get(key) and existing.get(key):
                 output[key] = existing[key]

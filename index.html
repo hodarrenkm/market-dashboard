@@ -772,16 +772,16 @@ const DEMO = {
     {sym:'RCD',d1:-1.44,w1:-2.44,hi52:-14.84,ytd:-6.44,spark:[-0.8,-1.0,-1.4,-1.0,-1.44]},
   ].sort((a,b)=>b.w1-a.w1),
   thematic: [
-    {sym:'BOTZ',price:32.84,d1:-1.44,w1:4.84,hi52:-12.44,ytd:2.84,spark:[0.8,2.8,1.4,-0.4,-1.44]},
-    {sym:'HACK',price:64.84,d1:-0.84,w1:4.44,hi52:-8.44,ytd:4.22,spark:[0.6,2.4,1.2,-0.2,-0.84]},
-    {sym:'SOXX',price:218.4,d1:-1.22,w1:3.84,hi52:-18.44,ytd:-2.44,spark:[0.4,2.2,1.4,-0.6,-1.22]},
-    {sym:'ICLN',price:12.84,d1:0.84,w1:3.44,hi52:-28.44,ytd:8.84,spark:[0.2,1.8,1.2,0.4,0.84]},
-    {sym:'SKYY',price:78.4,d1:-0.44,w1:3.22,hi52:-9.84,ytd:3.44,spark:[0.4,1.8,1.0,-0.2,-0.44]},
-    {sym:'AIQ',price:34.2,d1:-0.82,w1:3.12,hi52:-11.24,ytd:2.84,spark:[0.3,1.8,1.1,-0.3,-0.82]},
-    {sym:'XBI',price:84.84,d1:0.44,w1:2.84,hi52:-22.44,ytd:1.44,spark:[0.2,1.4,1.0,0.2,0.44]},
-    {sym:'ITA',price:148.4,d1:-0.22,w1:2.44,hi52:-4.44,ytd:6.84,spark:[0.1,1.2,0.8,-0.1,-0.22]},
-    {sym:'PAVE',price:44.8,d1:-0.44,w1:2.24,hi52:-8.84,ytd:4.44,spark:[0.2,1.4,0.6,-0.2,-0.44]},
-    {sym:'FINX',price:34.84,d1:-0.84,w1:2.22,hi52:-14.44,ytd:4.44,spark:[0.2,1.4,0.8,-0.4,-0.84]},
+    {sym:'XLK', price:228.4, d1:-0.84,w1:3.84, m1:5.22, hi52:-6.44, ytd:1.84, spark:[0.4,2.2,1.2,-0.2,-0.84]},
+    {sym:'SOXX',price:218.4, d1:-1.22,w1:3.44, m1:4.84, hi52:-18.44,ytd:-2.44,spark:[0.4,2.2,1.4,-0.6,-1.22]},
+    {sym:'SKYY',price:78.4,  d1:-0.44,w1:3.22, m1:4.22, hi52:-9.84, ytd:3.44, spark:[0.4,1.8,1.0,-0.2,-0.44]},
+    {sym:'ARKK',price:48.2,  d1:-1.04,w1:2.84, m1:3.84, hi52:-22.44,ytd:-4.44,spark:[0.6,2.4,1.0,-0.4,-1.04]},
+    {sym:'XBI', price:84.84, d1:0.44, w1:2.84, m1:3.44, hi52:-22.44,ytd:1.44, spark:[0.2,1.4,1.0,0.2,0.44]},
+    {sym:'ITA', price:148.4, d1:-0.22,w1:2.44, m1:3.84, hi52:-4.44, ytd:6.84, spark:[0.1,1.2,0.8,-0.1,-0.22]},
+    {sym:'JETS',price:18.4,  d1:-0.84,w1:1.84, m1:2.44, hi52:-14.44,ytd:-4.44,spark:[0.2,1.4,0.6,-0.4,-0.84]},
+    {sym:'GDX', price:44.8,  d1:0.84, w1:1.44, m1:6.84, hi52:-8.84, ytd:18.44,spark:[0.4,1.8,0.6,0.4,0.84]},
+    {sym:'ICLN',price:12.84, d1:0.84, w1:1.22, m1:2.84, hi52:-28.44,ytd:8.84, spark:[0.2,1.8,1.2,0.4,0.84]},
+    {sym:'KRE', price:52.4,  d1:-0.44,w1:0.84, m1:1.44, hi52:-12.44,ytd:4.22, spark:[0.1,0.8,0.4,-0.2,-0.44]},
   ].sort((a,b)=>b.w1-a.w1),
   country: [
     {sym:'EWH',name:'Hong Kong',flag:'🇭🇰',price:22.84,d1:-0.44,w1:4.84,hi52:-12.22,ytd:18.84,spark:[0.8,2.4,1.2,-0.2,-0.44]},
@@ -999,7 +999,9 @@ function _thematicCmp(a, b, col, dir) {
 }
 
 function renderThematic(data) {
-  const sorted = [...data].sort((a,b) => _thematicCmp(a, b, THEMATIC_SORT.col, THEMATIC_SORT.dir));
+  // Strict allow-list: drop any ETF not in the sector map (filters stale data.json entries)
+  const allowed = (data||[]).filter(item => THEMATIC_SECTOR[item.sym]);
+  const sorted = [...allowed].sort((a,b) => _thematicCmp(a, b, THEMATIC_SORT.col, THEMATIC_SORT.dir));
   buildRows(sorted, 't-thematic', {rank:true, hasPrice:true, hasHoldings:true, showEma:true, sectorMap:THEMATIC_SECTOR, hasM1:true});
   // Update header indicators
   document.querySelectorAll('#thematic-thead th[data-sort]').forEach(th => {
