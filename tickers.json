@@ -67,7 +67,6 @@
     "IYG",
     "KIE",
     "ARKF",
-    "XLV",
     "IBB",
     "XBI",
     "ARKG",
@@ -125,6 +124,7 @@
     "IYZ",
     "IGF"
   ],
+  "etfmain_ew": ["RSP","QQQE","EDOW","EQWS"],
   "country": [
     "GREK",
     "ARGT",

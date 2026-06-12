@@ -325,11 +325,18 @@ td:first-child,td.l{text-align:left}
     <div class="sec-sub">RANKED BY 1W PERFORMANCE</div>
   </div>
 
-  <!-- Major ETF stats -->
-  <div class="card" style="margin-bottom:9px">
-    <div class="card-lbl">▸ Major ETF Stats</div>
-    <table><thead><tr><th class="l">ETF</th><th>Price</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th><th>Trend</th></tr></thead>
-    <tbody id="t-etfmain"><tr><td colspan="9" class="loading">Loading...</td></tr></tbody></table>
+  <!-- Major ETF stats + Equal-Weight ETF stats -->
+  <div class="g2" style="margin-bottom:9px">
+    <div class="card">
+      <div class="card-lbl">▸ Major ETF Stats</div>
+      <table><thead><tr><th class="l">ETF</th><th>Price</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th><th>Trend</th></tr></thead>
+      <tbody id="t-etfmain"><tr><td colspan="9" class="loading">Loading...</td></tr></tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-lbl">▸ Equal-Weight ETF Stats</div>
+      <table><thead><tr><th class="l">ETF</th><th>Price</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th><th>Trend</th></tr></thead>
+      <tbody id="t-etfmainew"><tr><td colspan="9" class="loading">Loading...</td></tr></tbody></table>
+    </div>
   </div>
 
   <!-- Sub-market -->
@@ -355,7 +362,7 @@ td:first-child,td.l{text-align:left}
 
   <!-- Thematic ETFs -->
   <div class="card" style="margin-bottom:9px">
-    <div class="card-lbl">▸ Thematic ETFs (80) — Click column headers to sort · Holdings expandable ▸</div>
+    <div class="card-lbl">▸ Thematic ETFs (79) — Click column headers to sort · Holdings expandable ▸</div>
     <table><thead id="thematic-thead"><tr>
       <th class="l">#</th>
       <th class="l sort-hdr" data-sort="name" onclick="thematicHeaderClick('name')">Theme / ETF<span class="sort-ind"> ▲▼</span></th>
@@ -373,9 +380,19 @@ td:first-child,td.l{text-align:left}
 
   <!-- Country ETFs -->
   <div class="card">
-    <div class="card-lbl">▸ Country ETFs — Top 10 by 1W Performance (Holdings expandable ▸)</div>
-    <table><thead><tr><th class="l">#</th><th class="l">Country / ETF</th><th>Price</th><th>1D%</th><th>1W%</th><th>52W Hi%</th><th>YTD%</th><th>5D</th><th>Trend</th><th class="l">Holdings</th></tr></thead>
-    <tbody id="t-country"><tr><td colspan="10" class="loading">Loading...</td></tr></tbody></table>
+    <div class="card-lbl">▸ Country ETFs — Click column headers to sort · Holdings expandable ▸</div>
+    <table><thead id="country-thead"><tr>
+      <th class="l">#</th>
+      <th class="l sort-hdr" data-sort="name" onclick="countryHeaderClick('name')">Country / ETF<span class="sort-ind"> ▲▼</span></th>
+      <th>Price</th>
+      <th class="sort-hdr" data-sort="d1" onclick="countryHeaderClick('d1')">1D%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="w1" onclick="countryHeaderClick('w1')">1W%<span class="sort-ind active"> ▼</span></th>
+      <th class="sort-hdr" data-sort="m1" onclick="countryHeaderClick('m1')">1M%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="hi52" onclick="countryHeaderClick('hi52')">52W Hi%<span class="sort-ind"> ▲▼</span></th>
+      <th class="sort-hdr" data-sort="ytd" onclick="countryHeaderClick('ytd')">YTD%<span class="sort-ind"> ▲▼</span></th>
+      <th>5D</th><th>Trend</th><th class="l">Holdings</th>
+    </tr></thead>
+    <tbody id="t-country"><tr><td colspan="11" class="loading">Loading...</td></tr></tbody></table>
   </div>
 </div>
 
@@ -497,7 +514,8 @@ const FINNHUB_SYMBOLS = {
   submarket: ['IVW','IVE','IJK','IJJ','IJT','IJS','MGK','VUG','VTV'],
   sector:    ['XLK','XLV','XLF','XLE','XLY','XLI','XLB','XLU','XLRE','XLC','XLP'],
   sectorew:  ['RYT','RYH','RYF','RYE','RCD','RGI','RTM','RYU','EWRE','EWCO','RHS'],
-  thematic:  ['BOTZ','HACK','SOXX','ICLN','SKYY','XBI','ITA','FINX','ARKG','URA','AIQ','CIBR','ROBO','ARKK','DRIV','OGIG','ACES','PAVE','HERO','CLOU'],
+  etfmain_ew:['RSP','QQQE','EDOW','EQWS'],
+  thematic:  ['IYC','ESPO','PEJ','XRT','IYK','PBJ','AMLP','MLPX','XOP','OIH','XES','ICLN','TAN','PBW','NLR','FCG','KBWB','KRE','IAI','BIZD','IYG','KIE','ARKF','IBB','XBI','ARKG','IHI','PPH','IHE','IHF','ITA','XAR','ARKX','UFO','NASA','IYT','XTN','JETS','PHO','XME','GDX','GDXJ','SIL','SILJ','COPX','REMX','LIT','URA','URNM','GUNR','GNR','MOO','GRID','VOLT','ITB','XHB','SLX','WOOD','VNQ','SCHH','SMH','SOXX','DRAM','IGV','FDN','KWEB','CIBR','ARKK','ARKW','ARKQ','QTUM','SKYY','ROBO','DTCR','BLOK','BITW','WGMI','IYZ','IGF'],
   country:   ['EWJ','EWY','INDA','MCHI','GXC','EWH','EWU','EWQ','EWG','EWZ','EWT','EWA','EWC','EWL','EWP','EWS','TUR','EWM','EPHE','THD','VNM','EWI','EWN','EWD','EWK','EWO'],
 };
 
@@ -506,7 +524,7 @@ const THEMATIC_SECTOR = {
   'IYK':'Consumer Staples','PBJ':'Consumer Staples',
   'AMLP':'Energy','MLPX':'Energy','XOP':'Energy','OIH':'Energy','XES':'Energy','ICLN':'Energy','TAN':'Energy','PBW':'Energy','NLR':'Energy','FCG':'Energy',
   'KBWB':'Financials','KRE':'Financials','IAI':'Financials','BIZD':'Financials','IYG':'Financials','KIE':'Financials','ARKF':'Financials',
-  'XLV':'Healthcare','IBB':'Healthcare','XBI':'Healthcare','ARKG':'Healthcare','IHI':'Healthcare','PPH':'Healthcare','IHE':'Healthcare','IHF':'Healthcare',
+  'IBB':'Healthcare','XBI':'Healthcare','ARKG':'Healthcare','IHI':'Healthcare','PPH':'Healthcare','IHE':'Healthcare','IHF':'Healthcare',
   'ITA':'Industrials','XAR':'Industrials','ARKX':'Industrials','UFO':'Industrials','NASA':'Industrials','IYT':'Industrials','XTN':'Industrials','JETS':'Industrials','PHO':'Industrials',
   'XME':'Materials','GDX':'Materials','GDXJ':'Materials','SIL':'Materials','SILJ':'Materials','COPX':'Materials','REMX':'Materials','LIT':'Materials','URA':'Materials','URNM':'Materials','GUNR':'Materials','GNR':'Materials','MOO':'Materials','GRID':'Materials','VOLT':'Materials','ITB':'Materials','XHB':'Materials','SLX':'Materials','WOOD':'Materials',
   'VNQ':'Real Estate','SCHH':'Real Estate',
@@ -587,27 +605,110 @@ const META = {
   'EWRE':   { name:'EW Real Estate',     sym:'EWRE' },
   'EWCO':   { name:'EW Comm. Services',  sym:'EWCO' },
   'RHS':    { name:'EW Consumer Stap.',  sym:'RHS' },
-  // Thematic
-  'BOTZ':   { name:'Global X AI & Robotics',  sym:'BOTZ' },
-  'HACK':   { name:'ETFMG Prime Cybersecurity',sym:'HACK' },
-  'SOXX':   { name:'iSh Semiconductor',        sym:'SOXX' },
-  'ICLN':   { name:'iSh Global Clean Energy',  sym:'ICLN' },
-  'SKYY':   { name:'First Trust Cloud Computing',sym:'SKYY' },
-  'XBI':    { name:'SPDR Biotech',             sym:'XBI' },
-  'ITA':    { name:'iSh Aerospace & Defense',  sym:'ITA' },
-  'FINX':   { name:'Global X FinTech',         sym:'FINX' },
-  'ARKG':   { name:'ARK Genomic Revolution',   sym:'ARKG' },
-  'URA':    { name:'Global X Uranium',          sym:'URA' },
-  'AIQ':    { name:'Global X AI & Technology', sym:'AIQ' },
-  'CIBR':   { name:'First Trust Cybersecurity', sym:'CIBR' },
-  'ROBO':   { name:'ROBO Global Robotics',      sym:'ROBO' },
-  'ARKK':   { name:'ARK Innovation',            sym:'ARKK' },
-  'DRIV':   { name:'Global X Autonomous & EV',  sym:'DRIV' },
-  'OGIG':   { name:'O\'Shares Global Internet', sym:'OGIG' },
-  'ACES':   { name:'ALPS Clean Energy',          sym:'ACES' },
-  'PAVE':   { name:'Global X U.S. Infrastructure',sym:'PAVE' },
-  'HERO':   { name:'Global X Video Games & Esports',sym:'HERO' },
-  'CLOU':   { name:'Global X Cloud Computing',  sym:'CLOU' },
+  // Equal-Weight Major ETFs
+  'RSP':    { name:'Invesco S&P 500 Equal Weight', sym:'RSP' },
+  'QQQE':   { name:'Direxion Nasdaq-100 EW',       sym:'QQQE' },
+  'EDOW':   { name:'First Trust Dow 30 EW',         sym:'EDOW' },
+  'EQWS':   { name:'Equal Weight Small Cap ETF',    sym:'EQWS' },
+  // Thematic — Consumer
+  'IYC':    { name:'iShares Consumer Discretionary', sym:'IYC' },
+  'ESPO':   { name:'VanEck Video Gaming & eSports',  sym:'ESPO' },
+  'PEJ':    { name:'Invesco Leisure & Entertainment',sym:'PEJ' },
+  'XRT':    { name:'SPDR Retail ETF',                sym:'XRT' },
+  'IYK':    { name:'iShares Consumer Staples',       sym:'IYK' },
+  'PBJ':    { name:'Invesco Food & Beverage',        sym:'PBJ' },
+  // Thematic — Energy
+  'AMLP':   { name:'Alerian MLP',                    sym:'AMLP' },
+  'MLPX':   { name:'Global X MLP & Energy Infra',    sym:'MLPX' },
+  'XOP':    { name:'SPDR Oil & Gas E&P',             sym:'XOP' },
+  'OIH':    { name:'VanEck Oil Services',            sym:'OIH' },
+  'XES':    { name:'SPDR Oil & Gas Equip & Svcs',    sym:'XES' },
+  'ICLN':   { name:'iShares Global Clean Energy',    sym:'ICLN' },
+  'TAN':    { name:'Invesco Solar ETF',              sym:'TAN' },
+  'PBW':    { name:'Invesco Clean Energy',           sym:'PBW' },
+  'NLR':    { name:'VanEck Uranium & Nuclear',       sym:'NLR' },
+  'FCG':    { name:'First Trust Natural Gas',        sym:'FCG' },
+  // Thematic — Financials
+  'KBWB':   { name:'Invesco KBW Bank ETF',           sym:'KBWB' },
+  'KRE':    { name:'SPDR Regional Banks',            sym:'KRE' },
+  'IAI':    { name:'iShares Broker Dealers & Exch.', sym:'IAI' },
+  'BIZD':   { name:'VanEck BDC Income',              sym:'BIZD' },
+  'IYG':    { name:'iShares US Financial Services',  sym:'IYG' },
+  'KIE':    { name:'SPDR Insurance ETF',             sym:'KIE' },
+  'ARKF':   { name:'ARK Fintech Innovation',         sym:'ARKF' },
+  // Thematic — Healthcare
+  'IBB':    { name:'iShares Biotech ETF',            sym:'IBB' },
+  'XBI':    { name:'SPDR Biotech ETF',               sym:'XBI' },
+  'ARKG':   { name:'ARK Genomic Revolution',         sym:'ARKG' },
+  'IHI':    { name:'iShares Medical Devices',        sym:'IHI' },
+  'PPH':    { name:'VanEck Pharmaceutical',          sym:'PPH' },
+  'IHE':    { name:'iShares US Pharmaceutical',      sym:'IHE' },
+  'IHF':    { name:'iShares Healthcare Providers',   sym:'IHF' },
+  // Thematic — Industrials
+  'ITA':    { name:'iShares Aerospace & Defense',    sym:'ITA' },
+  'XAR':    { name:'SPDR Aerospace & Defense',       sym:'XAR' },
+  'ARKX':   { name:'ARK Space & Defense ETF',        sym:'ARKX' },
+  'UFO':    { name:'Procure Space ETF',              sym:'UFO' },
+  'NASA':   { name:'Tema Space Innovators',          sym:'NASA' },
+  'IYT':    { name:'iShares US Transportation',      sym:'IYT' },
+  'XTN':    { name:'SPDR Transportation ETF',        sym:'XTN' },
+  'JETS':   { name:'US Global Jets ETF',             sym:'JETS' },
+  'PHO':    { name:'Invesco Water Resources',        sym:'PHO' },
+  // Thematic — Materials
+  'XME':    { name:'SPDR Metals & Mining',           sym:'XME' },
+  'GDX':    { name:'VanEck Gold Miners',             sym:'GDX' },
+  'GDXJ':   { name:'VanEck Junior Gold Miners',      sym:'GDXJ' },
+  'SIL':    { name:'Global X Silver Miners',         sym:'SIL' },
+  'SILJ':   { name:'Amplify Junior Silver Miners',   sym:'SILJ' },
+  'COPX':   { name:'Global X Copper Miners',         sym:'COPX' },
+  'REMX':   { name:'VanEck Rare Earth Metals',       sym:'REMX' },
+  'LIT':    { name:'Global X Lithium & Battery',     sym:'LIT' },
+  'URA':    { name:'Global X Uranium',               sym:'URA' },
+  'URNM':   { name:'Sprott Uranium Miners',          sym:'URNM' },
+  'GUNR':   { name:'FlexShares Upstream Nat. Res.',  sym:'GUNR' },
+  'GNR':    { name:'SPDR Natural Resources',         sym:'GNR' },
+  'MOO':    { name:'VanEck Agribusiness',            sym:'MOO' },
+  'GRID':   { name:'First Trust Grid Infrastructure',sym:'GRID' },
+  'VOLT':   { name:'Tema Electrification ETF',       sym:'VOLT' },
+  'ITB':    { name:'iShares US Home Construction',   sym:'ITB' },
+  'XHB':    { name:'SPDR Homebuilders ETF',          sym:'XHB' },
+  'SLX':    { name:'VanEck Steel ETF',               sym:'SLX' },
+  'WOOD':   { name:'iShares Global Timber & Forestry',sym:'WOOD' },
+  // Thematic — Real Estate
+  'VNQ':    { name:'Vanguard Real Estate ETF',       sym:'VNQ' },
+  'SCHH':   { name:'Schwab US REIT ETF',             sym:'SCHH' },
+  // Thematic — Technology
+  'SMH':    { name:'VanEck Semiconductor',           sym:'SMH' },
+  'SOXX':   { name:'iShares Semiconductor',          sym:'SOXX' },
+  'DRAM':   { name:'Roundhill Memory ETF',           sym:'DRAM' },
+  'IGV':    { name:'iShares Tech Software',          sym:'IGV' },
+  'FDN':    { name:'First Trust Internet ETF',       sym:'FDN' },
+  'KWEB':   { name:'KraneShares China Internet',     sym:'KWEB' },
+  'CIBR':   { name:'First Trust Cybersecurity',      sym:'CIBR' },
+  'ARKK':   { name:'ARK Innovation ETF',             sym:'ARKK' },
+  'ARKW':   { name:'ARK Next Gen Internet',          sym:'ARKW' },
+  'ARKQ':   { name:'ARK Autonomous Tech & Robotics', sym:'ARKQ' },
+  'QTUM':   { name:'Defiance Quantum ETF',           sym:'QTUM' },
+  'SKYY':   { name:'First Trust Cloud Computing',    sym:'SKYY' },
+  'ROBO':   { name:'ROBO Global Robotics',           sym:'ROBO' },
+  'DTCR':   { name:'Global Data Center & Dig. Infra',sym:'DTCR' },
+  'BLOK':   { name:'Amplify Blockchain Technology',  sym:'BLOK' },
+  'BITW':   { name:'Bitwise 10 Crypto Index',        sym:'BITW' },
+  'WGMI':   { name:'Coinshares Bitcoin Mining',      sym:'WGMI' },
+  // Thematic — Telecom / Utilities
+  'IYZ':    { name:'iShares US Telecom',             sym:'IYZ' },
+  'IGF':    { name:'iShares Global Infrastructure',  sym:'IGF' },
+  // Legacy (no longer in active thematic list)
+  'BOTZ':   { name:'Global X AI & Robotics',         sym:'BOTZ' },
+  'HACK':   { name:'ETFMG Prime Cybersecurity',      sym:'HACK' },
+  'FINX':   { name:'Global X FinTech',               sym:'FINX' },
+  'AIQ':    { name:'Global X AI & Technology',       sym:'AIQ' },
+  'DRIV':   { name:'Global X Autonomous & EV',       sym:'DRIV' },
+  'OGIG':   { name:"O'Shares Global Internet",       sym:'OGIG' },
+  'ACES':   { name:'ALPS Clean Energy',              sym:'ACES' },
+  'PAVE':   { name:'Global X U.S. Infrastructure',   sym:'PAVE' },
+  'HERO':   { name:'Global X Video Games & Esports', sym:'HERO' },
+  'CLOU':   { name:'Global X Cloud Computing',       sym:'CLOU' },
   // Country ETFs
   'EWJ':    { name:'Japan',          sym:'EWJ',  flag:'🇯🇵' },
   'EWY':    { name:'South Korea',    sym:'EWY',  flag:'🇰🇷' },
@@ -734,6 +835,12 @@ const DEMO = {
     {sym:'DIA',price:432.84,d1:-0.38,w1:-1.11,hi52:-2.94,ytd:3.47,spark:[-0.1,0.6,-0.9,-0.2,-0.38]},
     {sym:'IWM',price:214.84,d1:-1.12,w1:-3.24,hi52:-11.44,ytd:-3.81,spark:[-0.8,-0.2,-1.5,-0.9,-1.12]},
   ],
+  etfmain_ew: [
+    {sym:'RSP', price:173.4, d1:-0.44,w1:-1.22,hi52:-5.84, ytd:0.84, spark:[-0.2,0.6,-0.8,-0.2,-0.44]},
+    {sym:'QQQE',price:84.2,  d1:-0.72,w1:-1.84,hi52:-7.22, ytd:-0.44,spark:[-0.3,0.8,-1.2,-0.4,-0.72]},
+    {sym:'EDOW',price:44.8,  d1:-0.22,w1:-0.84,hi52:-3.22, ytd:2.44, spark:[-0.1,0.4,-0.6,-0.1,-0.22]},
+    {sym:'EQWS',price:64.4,  d1:-0.84,w1:-1.44,hi52:-9.44, ytd:-2.44,spark:[-0.4,0.8,-1.1,-0.6,-0.84]},
+  ],
   submarket: [
     {sym:'IVW',price:102.4,d1:-0.84,w1:3.44,hi52:-4.22,ytd:2.84,spark:[0.4,1.8,0.8,-0.2,-0.84]},
     {sym:'IVE',price:88.2,d1:-0.44,w1:2.84,hi52:-3.84,ytd:4.22,spark:[0.2,1.4,0.6,-0.1,-0.44]},
@@ -784,16 +891,16 @@ const DEMO = {
     {sym:'KRE', price:52.4,  d1:-0.44,w1:0.84, m1:1.44, hi52:-12.44,ytd:4.22, spark:[0.1,0.8,0.4,-0.2,-0.44]},
   ].sort((a,b)=>b.w1-a.w1),
   country: [
-    {sym:'EWH',name:'Hong Kong',flag:'🇭🇰',price:22.84,d1:-0.44,w1:4.84,hi52:-12.22,ytd:18.84,spark:[0.8,2.4,1.2,-0.2,-0.44]},
-    {sym:'EWG',name:'Germany',flag:'🇩🇪',price:34.44,d1:-0.18,w1:3.84,hi52:-1.84,ytd:14.44,spark:[0.6,2.2,0.8,-0.1,-0.18]},
-    {sym:'EWP',name:'Spain',flag:'🇪🇸',price:44.84,d1:-0.44,w1:2.84,hi52:-3.84,ytd:14.84,spark:[0.2,2.0,0.6,-0.2,-0.44]},
-    {sym:'EWN',name:'Netherlands',flag:'🇳🇱',price:44.84,d1:-0.22,w1:2.84,hi52:-2.84,ytd:14.44,spark:[0.1,2.0,0.6,-0.1,-0.22]},
-    {sym:'EWQ',name:'France',flag:'🇫🇷',price:28.84,d1:-0.62,w1:2.44,hi52:-8.84,ytd:10.44,spark:[0.4,1.8,-0.4,-0.4,-0.62]},
-    {sym:'EPHE',name:'Philippines',flag:'🇵🇭',price:28.84,d1:0.44,w1:1.84,hi52:-18.44,ytd:4.84,spark:[0.2,0.8,0.4,0.2,0.44]},
-    {sym:'INDA',name:'India',flag:'🇮🇳',price:44.84,d1:0.82,w1:1.84,hi52:-9.84,ytd:1.84,spark:[0.4,1.2,0.8,0.4,0.82]},
-    {sym:'EWU',name:'United Kingdom',flag:'🇬🇧',price:38.44,d1:-0.28,w1:1.44,hi52:-2.44,ytd:6.84,spark:[0.2,0.8,0.4,-0.1,-0.28]},
-    {sym:'EWT',name:'Taiwan',flag:'🇹🇼',price:48.84,d1:-0.44,w1:1.44,hi52:-8.44,ytd:4.44,spark:[0.2,1.2,0.4,-0.2,-0.44]},
-    {sym:'EWS',name:'Singapore',flag:'🇸🇬',price:24.84,d1:0.44,w1:1.22,hi52:-6.84,ytd:4.44,spark:[0.2,0.8,0.4,0.2,0.44]},
+    {sym:'EWH', name:'Hong Kong',      flag:'🇭🇰',price:22.84,d1:-0.44,w1:4.84, m1:12.84,hi52:-12.22,ytd:18.84,spark:[0.8,2.4,1.2,-0.2,-0.44]},
+    {sym:'EWG', name:'Germany',        flag:'🇩🇪',price:34.44,d1:-0.18,w1:3.84, m1:10.44,hi52:-1.84, ytd:14.44,spark:[0.6,2.2,0.8,-0.1,-0.18]},
+    {sym:'EWP', name:'Spain',          flag:'🇪🇸',price:44.84,d1:-0.44,w1:2.84, m1:9.84, hi52:-3.84, ytd:14.84,spark:[0.2,2.0,0.6,-0.2,-0.44]},
+    {sym:'EWN', name:'Netherlands',    flag:'🇳🇱',price:44.84,d1:-0.22,w1:2.84, m1:9.44, hi52:-2.84, ytd:14.44,spark:[0.1,2.0,0.6,-0.1,-0.22]},
+    {sym:'EWQ', name:'France',         flag:'🇫🇷',price:28.84,d1:-0.62,w1:2.44, m1:8.44, hi52:-8.84, ytd:10.44,spark:[0.4,1.8,-0.4,-0.4,-0.62]},
+    {sym:'EPHE',name:'Philippines',    flag:'🇵🇭',price:28.84,d1:0.44, w1:1.84, m1:5.44, hi52:-18.44,ytd:4.84, spark:[0.2,0.8,0.4,0.2,0.44]},
+    {sym:'INDA',name:'India',          flag:'🇮🇳',price:44.84,d1:0.82, w1:1.84, m1:4.84, hi52:-9.84, ytd:1.84, spark:[0.4,1.2,0.8,0.4,0.82]},
+    {sym:'EWU', name:'United Kingdom', flag:'🇬🇧',price:38.44,d1:-0.28,w1:1.44, m1:4.44, hi52:-2.44, ytd:6.84, spark:[0.2,0.8,0.4,-0.1,-0.28]},
+    {sym:'EWT', name:'Taiwan',         flag:'🇹🇼',price:48.84,d1:-0.44,w1:1.44, m1:3.84, hi52:-8.44, ytd:4.44, spark:[0.2,1.2,0.4,-0.2,-0.44]},
+    {sym:'EWS', name:'Singapore',      flag:'🇸🇬',price:24.84,d1:0.44, w1:1.22, m1:3.44, hi52:-6.84, ytd:4.44, spark:[0.2,0.8,0.4,0.2,0.44]},
   ].sort((a,b)=>b.w1-a.w1),
 };
 
@@ -1034,6 +1141,53 @@ function thematicHeaderClick(col) {
 }
 
 // ═══════════════════════════════════════════════════════
+// COUNTRY TABLE SORT
+// ═══════════════════════════════════════════════════════
+const COUNTRY_SORT = {col:'w1', dir:'desc'};
+
+function _countryCmp(a, b, col, dir) {
+  if (col === 'name') {
+    const an = (a.name || META[a.sym]?.name || a.sym).toLowerCase();
+    const bn = (b.name || META[b.sym]?.name || b.sym).toLowerCase();
+    return dir === 'asc' ? an.localeCompare(bn) : bn.localeCompare(an);
+  }
+  const av = a[col] ?? -Infinity;
+  const bv = b[col] ?? -Infinity;
+  return dir === 'asc' ? av - bv : bv - av;
+}
+
+function renderCountry(data) {
+  const sorted = [...(data||[])].sort((a,b) => _countryCmp(a, b, COUNTRY_SORT.col, COUNTRY_SORT.dir));
+  buildRows(sorted, 't-country', {rank:true, hasPrice:true, hasHoldings:true, showEma:true, hasM1:true});
+  document.querySelectorAll('#country-thead th[data-sort]').forEach(th => {
+    const ind = th.querySelector('.sort-ind');
+    if (!ind) return;
+    if (th.dataset.sort === COUNTRY_SORT.col) {
+      ind.textContent = COUNTRY_SORT.dir === 'asc' ? ' ▲' : ' ▼';
+      ind.classList.add('active');
+    } else {
+      ind.textContent = ' ▲▼';
+      ind.classList.remove('active');
+    }
+  });
+}
+
+function countryHeaderClick(col) {
+  if (COUNTRY_SORT.col === col) {
+    if (COUNTRY_SORT.dir === 'desc') {
+      COUNTRY_SORT.dir = 'asc';
+    } else {
+      COUNTRY_SORT.col = 'w1';
+      COUNTRY_SORT.dir = 'desc';
+    }
+  } else {
+    COUNTRY_SORT.col = col;
+    COUNTRY_SORT.dir = 'desc';
+  }
+  if (DATA) renderCountry(DATA.country || []);
+}
+
+// ═══════════════════════════════════════════════════════
 // LIVE DATA — loaded from data/data.json (built by GitHub Actions)
 // ═══════════════════════════════════════════════════════
 let DATA = null;
@@ -1045,8 +1199,9 @@ function renderAll(d) {
   buildRows(d.commod,    't-commod',   {hasPrice:true});
   buildRows(d.yields,    't-yields',   {hasPrice:true,isYield:true});
   buildRows(d.global,    't-global',   {hasPrice:true});
-  buildRows(d.etfmain,   't-etfmain',  {hasPrice:true,hasHoldings:true,showEma:true});
-  buildRows(d.submarket, 't-submarket',{rank:true,hasPrice:true,showEma:true});
+  buildRows(d.etfmain,      't-etfmain',   {hasPrice:true,hasHoldings:true,showEma:true});
+  buildRows(d.etfmain_ew||[], 't-etfmainew', {hasPrice:true,hasHoldings:true,showEma:true});
+  buildRows(d.submarket,    't-submarket', {rank:true,hasPrice:true,showEma:true});
   const _spySec = d.etfmain ? d.etfmain.find(e=>e.sym==='SPY') : null;
   let _secData = d.sector ? [...d.sector] : [];
   if(_spySec && !_secData.find(e=>e.sym==='SPY')) _secData.push({..._spySec});
@@ -1058,7 +1213,7 @@ function renderAll(d) {
   _sectorewData.sort((a,b)=>(b.w1||0)-(a.w1||0));
   buildRows(_sectorewData, 't-sectorew', {rank:true,hasPrice:false,hasHoldings:true,benchmarkSym:'RSP',showEma:true});
   renderThematic(d.thematic||[]);
-  buildRows(d.country,   't-country',  {rank:true,hasPrice:true,hasHoldings:true,showEma:true});
+  renderCountry(d.country||[]);
 
   // Crypto
   const cb=document.getElementById('t-crypto');

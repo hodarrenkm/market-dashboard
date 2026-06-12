@@ -57,6 +57,7 @@ SECTOR     = ['XLK','XLV','XLF','XLE','XLY','XLI','XLB','XLU','XLRE','XLC','XLP'
 SECTOR_EW  = ['RSPG','RSPT','RSPF','RSPN','RSPD','RSP','RSPU','RSPM','RSPH','RSPR','RSPS','RSPC']
 THEMATIC   = ['BOTZ','HACK','SOXX','ICLN','SKYY','XBI','ITA','FINX','ARKG','URA',
               'AIQ','CIBR','ROBO','ARKK','DRIV','OGIG','ACES','PAVE','HERO','CLOU']
+ETFMAIN_EW = ['RSP','QQQE','EDOW','EQWS']
 COUNTRY    = ['GREK','ARGT','EWS','EWP','EUFN','MCHI','EWZ','EWI','EWY','EWH',
               'ECH','EWC','EWL','EWQ','EWA','IEV','IEUR','INDA','EWG','EWW',
               'EZU','EEM','EFA','EWD','TUR','EZA','ACWI','KSA','EIDO','EWJ','EWT','THD']
@@ -78,6 +79,7 @@ if config_path.exists():
     SECTOR     = CFG.get('sectors',    SECTOR)
     SECTOR_EW  = CFG.get('sectors_ew', SECTOR_EW)
     THEMATIC   = CFG.get('thematic',   THEMATIC)
+    ETFMAIN_EW = CFG.get('etfmain_ew', ETFMAIN_EW)
     COUNTRY    = CFG.get('country',    COUNTRY)
     FUTURES    = CFG.get('futures',    FUTURES)
     METALS     = CFG.get('metals',     METALS)
@@ -649,7 +651,7 @@ def fetch_all(prices_only=False):
     output = {
         'generated_at': datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
         'futures':  [], 'dxvix':   [], 'metals':   [], 'commod':  [],
-        'yields':   [], 'global':  [], 'etfmain':  [], 'submarket':[],
+        'yields':   [], 'global':  [], 'etfmain':  [], 'etfmain_ew': [], 'submarket':[],
         'sector':   [], 'sectorew':[], 'thematic': [], 'country': [],
         'crypto':   [],
         'holdings': existing.get('holdings', {}),
@@ -658,12 +660,13 @@ def fetch_all(prices_only=False):
 
     # US ETF sections: always yfinance (Massive API has T+1 delay for US equities)
     yf_etf_batches = [
-        ('etfmain',   ETF_MAIN),
-        ('submarket', SUBMARKET),
-        ('sector',    SECTOR),
-        ('sectorew',  SECTOR_EW),
-        ('thematic',  THEMATIC),
-        ('country',   COUNTRY),
+        ('etfmain',    ETF_MAIN),
+        ('etfmain_ew', ETFMAIN_EW),
+        ('submarket',  SUBMARKET),
+        ('sector',     SECTOR),
+        ('sectorew',   SECTOR_EW),
+        ('thematic',   THEMATIC),
+        ('country',    COUNTRY),
     ]
     # Always yfinance: all price data (Massive has T+1 delay across all asset classes)
     # Massive is kept only for the treasury yield curve (Economy API).
@@ -739,7 +742,7 @@ def fetch_all(prices_only=False):
     # If any section came back empty (API failure), preserve existing data
     # rather than overwriting with empty arrays.
     if existing:
-        massive_sections = ['etfmain', 'submarket', 'sector', 'sectorew',
+        massive_sections = ['etfmain', 'etfmain_ew', 'submarket', 'sector', 'sectorew',
                             'country', 'crypto', 'global', 'yields']
         for key in massive_sections:
             if not output.get(key) and existing.get(key):
@@ -756,7 +759,7 @@ def fetch_all(prices_only=False):
 
     if not prices_only:
         holdings_tickers = list(dict.fromkeys(
-            ETF_MAIN + SUBMARKET + SECTOR + SECTOR_EW + THEMATIC + COUNTRY
+            ETF_MAIN + ETFMAIN_EW + SUBMARKET + SECTOR + SECTOR_EW + THEMATIC + COUNTRY
         ))
         print(f"\nFetching ETF holdings ({len(holdings_tickers)} ETFs)...")
         output['holdings'] = fetch_etf_holdings(holdings_tickers)
